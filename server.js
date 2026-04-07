@@ -6,6 +6,7 @@ const clientSessions = require("client-sessions");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
+const pg = require("pg");
 const { Sequelize, DataTypes } = require("sequelize");
 
 const app = express();
