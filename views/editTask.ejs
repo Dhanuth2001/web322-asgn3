@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<div class="p-5">
+  <h2 class="text-xl font-bold mb-3">Edit Task</h2>
+
+  <form method="POST">
+    <input name="title" value="<%= task.title %>" class="border p-2 w-full mb-2" />
+    <textarea name="description" class="border p-2 w-full mb-2"><%= task.description %></textarea>
+    <input type="date" name="dueDate" value="<%= task.dueDate %>" class="border p-2 w-full mb-2" />
+    <button class="bg-green-500 text-white px-4 py-2">Update</button>
+    <a href="/dashboard" class="inline-block mb-4 text-blue-600 hover:underline">
+          Back
+        </a>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

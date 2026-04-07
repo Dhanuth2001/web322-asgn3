@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<div class="w-full p-5">
+  <h2 class="text-xl font-bold mb-4">Your Tasks</h2>
+
+  <a href="/tasks/add" class="bg-blue-500 text-white px-3 py-1">Add Task</a>
+
+  <% tasks.forEach(task => { %>
+    <div class="bg-white p-4 mt-3 border rounded">
+      <h3 class="font-bold"><%= task.title %></h3>
+      <p><%= task.description %></p>
+      <p>Status: <%= task.status %></p>
+      <p>Due Date: <%= task.dueDate ? task.dueDate : "No Date" %></p>
+
+      <div class="mt-2 flex gap-2">
+        <form action="/tasks/status/<%= task.id %>" method="POST">
+          <button class="text-green-500">Toggle</button>
+        </form>
+
+        <% if (task.status === "pending") { %>
+          <a href="/tasks/edit/<%= task.id %>" class="text-blue-500">Edit</a>
+        <% } else { %>
+          <span class="text-gray-400">Edit</span>
+        <% } %>
+
+        <form action="/tasks/delete/<%= task.id %>" method="POST">
+          <button class="text-red-500">Delete</button>
+        </form>
+
+        <a href="/dashboard" class="inline-block mb-4 text-blue-600 hover:underline">
+          Back
+        </a>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('partials/footer') %>

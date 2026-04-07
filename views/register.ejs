@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<div class="p-6 max-w-md mx-auto bg-white mt-10 rounded shadow">
+  <h2 class="text-xl font-bold mb-4">Register</h2>
+
+  <% if (error) { %>
+    <p class="text-red-500"><%= error %></p>
+  <% } %>
+
+  <form method="POST">
+    <input name="username" placeholder="Username" class="w-full border p-2 mb-2" required />
+    <input name="email" placeholder="Email" class="w-full border p-2 mb-2" required />
+    <input type="password" name="password" placeholder="Password" class="w-full border p-2 mb-2" required />
+    <input type="password" name="confirmPassword" placeholder="Confirm Password" class="w-full border p-2 mb-3" required />
+    <button class="bg-green-500 text-white px-4 py-2 w-full">Register</button>
+    <a href="/login" class="block text-center bg-gray-300 px-4 py-2 w-full rounded mt-2">
+       Back
+    </a>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

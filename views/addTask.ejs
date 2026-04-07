@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<div class="p-5">
+  <h2 class="text-xl font-bold mb-3">Add Task</h2>
+
+  <form method="POST">
+    <input name="title" placeholder="Title" class="border p-2 w-full mb-2" required />
+    <textarea name="description" class="border p-2 w-full mb-2"></textarea>
+    <input type="date" name="dueDate" class="border p-2 w-full mb-2" />
+    <button class="bg-blue-500 text-white px-4 py-2">Add</button>
+    <a href="/dashboard" class="inline-block mb-4 text-blue-600 hover:underline">
+          Back
+        </a>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
