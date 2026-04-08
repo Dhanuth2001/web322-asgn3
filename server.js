@@ -11,9 +11,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 const app = express();
 
-// ======================
 // MIDDLEWARE
-// ======================
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -38,9 +36,8 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
-// ======================
+
 // DATABASE CONNECTIONS
-// ======================
 
 // MongoDB (Users)
 mongoose.connect(process.env.MONGO_URI)
@@ -56,9 +53,8 @@ sequelize.sync()
   .then(() => console.log("PostgreSQL Connected"))
   .catch(err => console.log(err));
 
-// ======================
+
 // MODELS
-// ======================
 
 // MongoDB User Model
 const userSchema = new mongoose.Schema({
@@ -95,18 +91,14 @@ const Task = sequelize.define("Task", {
   timestamps: true
 });
 
-// ======================
 // AUTH MIDDLEWARE
-// ======================
 
 function ensureLogin(req, res, next) {
   if (!req.session.user) return res.redirect("/login");
   next();
 }
 
-// ======================
 // HELPER
-// ======================
 
 function formatDate(date) {
   return date ? new Date(date).toISOString().split("T")[0] : "";
@@ -126,18 +118,14 @@ function validateTaskInput(title, dueDate) {
   return errors;
 }
 
-// ======================
 // ROUTES
-// ======================
 
 // Home
 app.get("/", (req, res) => {
   res.redirect("/login");
 });
 
-// ======================
 // AUTH ROUTES
-// ======================
 
 // REGISTER
 app.get("/register", (req, res) => {
@@ -150,6 +138,14 @@ app.post("/register", async (req, res) => {
 
     if (!username || !email || !password) {
       return res.render("register", { error: "All fields are required", title: "Register" });
+    }
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    if (!gmailRegex.test(email)) {
+      return res.render("register", {
+        error: "Enter a valid Gmail address",
+        title: "Register"
+      });
     }
 
     if (password !== confirmPassword) {
@@ -229,9 +225,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-// ======================
 // DASHBOARD
-// ======================
 
 app.get("/dashboard", ensureLogin, async (req, res) => {
   const total = await Task.count({
@@ -248,9 +242,7 @@ app.get("/dashboard", ensureLogin, async (req, res) => {
   res.render("dashboard", { total, completed, title: "Dashboard" });
 });
 
-// ======================
 // TASK ROUTES
-// ======================
 
 // TASK LIST
 app.get("/tasks", ensureLogin, async (req, res) => {
@@ -382,9 +374,7 @@ app.post("/tasks/status/:id", ensureLogin, async (req, res) => {
   res.redirect("/tasks");
 });
 
-// ======================
 // START SERVER
-// ======================
 
 const PORT = process.env.PORT || 3000;
 
